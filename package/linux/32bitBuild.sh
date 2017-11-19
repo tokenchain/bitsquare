@@ -6,7 +6,7 @@ mkdir -p gui/deploy
 set -e
 
 # Edit version
-version=0.5.3
+version=0.6.0
 
 jarFile="/media/sf_vm_shared_ubuntu14_32bit/Bisq-$version.jar"
 
@@ -16,7 +16,7 @@ $JAVA_HOME/bin/javapackager \
     -Bruntime="$JAVA_HOME/jre" \
     -BappVersion=$version \
     -Bcategory=Network \
-    -Bemail=team@bisq.io \
+    -Bemail=contact@bisq.network \
     -BlicenseType=GPLv3 \
     -BlicenseFile=LICENSE \
     -Bicon=package/linux/icon.png \
@@ -30,8 +30,8 @@ $JAVA_HOME/bin/javapackager \
     -appclass io.bisq.gui.app.BisqAppMain \
     -BjvmOptions=-Xss1280k \
     -outfile Bisq
-     
-# when we have support for security manager we use that     
+
+# when we have support for security manager we use that
 #     \
 #    -BjvmOptions=-Djava.security.manager \
 #    -BjvmOptions=-Djava.security.debug=failure \

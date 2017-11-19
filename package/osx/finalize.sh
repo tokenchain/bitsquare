@@ -1,9 +1,9 @@
 #!/bin/bash
 
-version="0.5.3"
+version="0.6.0"
 
 target_dir="/Users/dev/Documents/__bisq/_releases/$version"
-src_dir="/Users/dev/Documents/intellij/bisq"
+src_dir="/Users/dev/Documents/intellij/exchange_bisq"
 
 rm -r $target_dir
 
@@ -12,8 +12,15 @@ mkdir -p $target_dir
 # new signing key
 #cp "$target_dir/../7D20BB32.asc" "$target_dir/"
 
-#old sig key
+
+
+
+# sig key mkarrer
 cp "$target_dir/../F379A1C6.asc" "$target_dir/"
+# sig key cbeams
+cp "$target_dir/../5BC5ED73.asc" "$target_dir/"
+# signing key
+cp "$target_dir/../signingkey.asc" "$target_dir/"
 
 mac="Bisq-$version.dmg"
 cp "$src_dir/gui/deploy/$mac" "$target_dir/"
@@ -26,13 +33,13 @@ deb32="Bisq-32bit-$version.deb"
 cp "/Users/dev/vm_shared_ubuntu14_32bit/$deb32" "$target_dir/"
 
 deb64="Bisq-64bit-$version.deb"
-cp "/Users/dev/vm_shared_ubuntu/$deb64" "$target_dir/" 
+cp "/Users/dev/vm_shared_ubuntu/$deb64" "$target_dir/"
 
 #rpm32="Bisq-32bit-$version.rpm"
 #cp "/Users/dev/vm_shared_ubuntu14_32bit/$rpm32" "$target_dir/"
 
 #rpm64="Bisq-64bit-$version.rpm"
-#cp "/Users/dev/vm_shared_ubuntu/$rpm64" "$target_dir/" 
+#cp "/Users/dev/vm_shared_ubuntu/$rpm64" "$target_dir/"
 
 
 exe="Bisq-$version.exe"
@@ -57,6 +64,6 @@ gpg --digest-algo SHA256 --verify $deb32{.asc*,}
 gpg --digest-algo SHA256 --verify $win64{.asc*,}
 gpg --digest-algo SHA256 --verify $win32{.asc*,}
 
-cp -r $target_dir /Users/dev/vm_shared_windows/
+cp -r $target_dir /Users/dev/vm_shared_windows_32bit/
 
 open "$target_dir"
