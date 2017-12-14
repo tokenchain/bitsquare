@@ -173,6 +173,11 @@ public class OfferBookView extends ActivatableViewAndModel<GridPane, OfferBookVi
         placeholder.setWrapText(true);
         tableView.setPlaceholder(placeholder);
 
+        marketColumn.setComparator((o1, o2) -> {
+            String str1 = formatter.getCurrencyPair(o1.getOffer().getCurrencyCode());
+            String str2 = formatter.getCurrencyPair(o2.getOffer().getCurrencyCode());
+            return str1 != null && str2 != null ? str1.compareTo(str2) : 0;
+        });
         priceColumn.setComparator((o1, o2) -> {
             Price price1 = o1.getOffer().getPrice();
             Price price2 = o2.getOffer().getPrice();
@@ -225,6 +230,7 @@ public class OfferBookView extends ActivatableViewAndModel<GridPane, OfferBookVi
         model.priceSortTypeProperty.addListener((observable, oldValue, newValue) -> {
             priceColumn.setSortType(newValue);
         });
+        priceColumn.setSortType(model.priceSortTypeProperty.get());
 
         paymentMethodComboBox.setItems(model.getPaymentMethods());
         paymentMethodComboBox.setOnAction(e -> model.onSetPaymentMethod(paymentMethodComboBox.getSelectionModel().getSelectedItem()));

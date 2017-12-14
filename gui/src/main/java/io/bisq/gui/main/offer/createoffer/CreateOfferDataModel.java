@@ -309,6 +309,9 @@ class CreateOfferDataModel extends ActivatableDataModel {
         if (paymentAccount instanceof SepaAccount) {
             acceptedCountryCodes = new ArrayList<>();
             acceptedCountryCodes.addAll(((SepaAccount) paymentAccount).getAcceptedCountryCodes());
+        } else if (paymentAccount instanceof SepaInstantAccount) {
+            acceptedCountryCodes = new ArrayList<>();
+            acceptedCountryCodes.addAll(((SepaInstantAccount) paymentAccount).getAcceptedCountryCodes());
         } else if (paymentAccount instanceof CountryBasedPaymentAccount) {
             acceptedCountryCodes = new ArrayList<>();
             acceptedCountryCodes.add(((CountryBasedPaymentAccount) paymentAccount).getCountry().code);
@@ -722,7 +725,6 @@ class CreateOfferDataModel extends ActivatableDataModel {
     }
 
     public void swapTradeToSavings() {
-        log.error("swapTradeToSavings, offerId={}", offerId);
         btcWalletService.resetAddressEntriesForOpenOffer(offerId);
     }
 

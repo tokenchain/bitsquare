@@ -67,6 +67,14 @@ public class CoreSeedNodesRepository implements SeedNodesRepository {
             new NodeAddress("s67qglwhkgkyvr74.onion:8000"), // @emzy
             new NodeAddress("jhgcy2won7xnslrb.onion:8000"), // @sqrrm
 
+            /* old nodes pre 0.6.0 (still running for 0.5.* versions
+            new NodeAddress("3f3cu2yw7u457ztq.onion:8000"),
+            new NodeAddress("723ljisnynbtdohi.onion:8000"),
+            new NodeAddress("rm7b56wbrcczpjvl.onion:8000"),
+            new NodeAddress("fl3mmribyxgrv63c.onion:8000"),
+            */
+
+
             //TODO dev
             // local dev
             // new NodeAddress("joehwtpe7ijnz4df.onion:8000"),
@@ -86,18 +94,14 @@ public class CoreSeedNodesRepository implements SeedNodesRepository {
 
             // LTC mainnet
             new NodeAddress("acyvotgewx46pebw.onion:8003"),
-            // new NodeAddress("pklgy3vdfn3obkur.onion:8003"), removed in version 0.6
-
-            // keep the below but we don't run them atm
-            /*  new NodeAddress("cfciqxcowuhjdnkl.onion:8003"),
-            new NodeAddress("bolqw3hs55uii7ku.onion:8003"),*/
+            new NodeAddress("pklgy3vdfn3obkur.onion:8003"),
 
             // DOGE mainnet
             // new NodeAddress("t6bwuj75mvxswavs.onion:8006"), removed in version 0.6 (DOGE not supported anymore)
 
-            //DASH mainnet
-            new NodeAddress("toeu5ikb27ydscxt.onion:8009")
-            //new NodeAddress("ae4yvaivhnekkhqf.onion:8009")  removed in version 0.6
+            // DASH mainnet
+            new NodeAddress("toeu5ikb27ydscxt.onion:8009"),
+            new NodeAddress("ae4yvaivhnekkhqf.onion:8009")
     );
 
     // Addresses are used if the last digit of their port match the network id:
