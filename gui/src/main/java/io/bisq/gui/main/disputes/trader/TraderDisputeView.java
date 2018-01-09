@@ -322,6 +322,12 @@ public class TraderDisputeView extends ActivatableView<VBox, Void> {
                             .onAddAlertMessage(privateNotificationManager::sendPrivateNotificationMessageIfKeyIsValid)
                             .show();
                 }
+            } else if (Utilities.isAltOrCtrlPressed(KeyCode.ENTER, event)) {
+                if (selectedDispute != null) {
+                    if (messagesInputBox.isVisible() && inputTextArea.isFocused()) {
+                        onTrySendMessage();
+                    }
+                }
             }
         };
     }
@@ -423,6 +429,21 @@ public class TraderDisputeView extends ActivatableView<VBox, Void> {
 
     private void onOpenContract(Dispute dispute) {
         contractWindow.show(dispute);
+    }
+
+    private void onTrySendMessage() {
+        if (p2PService.isBootstrapped()) {
+            String text = inputTextArea.getText();
+            if (!text.isEmpty()) {
+                if (text.length() < 5_000) {
+                    onSendMessage(text, selectedDispute);
+                } else {
+                    new Popup<>().information(Res.get("popup.warning.messageTooLong")).show();
+                }
+            }
+        } else {
+            new Popup<>().information(Res.get("popup.warning.notFullyConnected")).show();
+        }
     }
 
     private void onSendMessage(String inputText, Dispute dispute) {
@@ -627,18 +648,7 @@ public class TraderDisputeView extends ActivatableView<VBox, Void> {
 
             sendButton = new Button(Res.get("support.send"));
             sendButton.setDefaultButton(true);
-            sendButton.setOnAction(e -> {
-                if (p2PService.isBootstrapped()) {
-                    String text = inputTextArea.getText();
-                    if (!text.isEmpty())
-                        if (text.length() < 5_000)
-                            onSendMessage(text, selectedDispute);
-                        else
-                            new Popup<>().information(Res.get("popup.warning.messageTooLong")).show();
-                } else {
-                    new Popup<>().information(Res.get("popup.warning.notFullyConnected")).show();
-                }
-            });
+            sendButton.setOnAction(e -> onTrySendMessage());
             inputTextAreaTextSubscription = EasyBind.subscribe(inputTextArea.textProperty(), t -> sendButton.setDisable(t.isEmpty()));
 
             Button uploadButton = new Button(Res.get("support.addAttachments"));
@@ -708,7 +718,7 @@ public class TraderDisputeView extends ActivatableView<VBox, Void> {
                             headerLabel.setTextAlignment(TextAlignment.CENTER);
                             attachmentsBox.setSpacing(5);
                             statusIcon.setStyle("-fx-font-size: 10;");
-                            Tooltip.install(copyIcon, new Tooltip(Res.get("shared.copyToClipboard")));
+                            copyIcon.setTooltip(new Tooltip(Res.get("shared.copyToClipboard")));
                             messageAnchorPane.getChildren().addAll(bg, arrow, headerLabel, messageLabel, copyIcon, attachmentsBox, statusIcon);
                         }
 
@@ -885,14 +895,14 @@ public class TraderDisputeView extends ActivatableView<VBox, Void> {
                         private void showMailboxIcon() {
                             statusIcon.setVisible(true);
                             AwesomeDude.setIcon(statusIcon, AwesomeIcon.ENVELOPE_ALT, "14");
-                            Tooltip.install(statusIcon, new Tooltip(Res.get("support.savedInMailbox")));
+                            statusIcon.setTooltip(new Tooltip(Res.get("support.savedInMailbox")));
                             statusIcon.setTextFill(Paint.valueOf("#0f87c3"));
                         }
 
                         private void showArrivedIcon() {
                             statusIcon.setVisible(true);
                             AwesomeDude.setIcon(statusIcon, AwesomeIcon.OK, "14");
-                            Tooltip.install(statusIcon, new Tooltip(Res.get("support.arrived")));
+                            statusIcon.setTooltip(new Tooltip(Res.get("support.arrived")));
                             statusIcon.setTextFill(Paint.valueOf("#0f87c3"));
                         }
                     };
